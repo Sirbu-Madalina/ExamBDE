@@ -1,0 +1,236 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: #504E76;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;  
+}
+
+a {
+  font-weight: 500;
+  color: #71727e;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #74719b;
+}
+
+.hidden {
+  display: none;
+}
+
+body {
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: #FDF8E2;
+  
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  color: #74719b;
+  text-align: center;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #FDF8E2);
+}
+.logo.vanilla:hover {
+  filter: drop-shadow(0 0 2em #FDF8E2);
+}
+
+
+.read-the-docs {
+  color: #FDF8E2;
+}
+
+/* Button section */
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0px;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #C4C3E3;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #504E76;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.button-add{
+  display: inline-block;
+  padding: 10px 10px;
+}
+
+.remove-btn,
+.edit-btn {
+  padding: 10px 10px;
+  margin-left: 10px;
+}
+
+.clear-completed-btn,
+.toggle-all-btn{
+  padding: 10px 10px;
+  margin-left: 10px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #504E76;
+    background-color: #d7d7d7;
+  }
+  a:hover {
+    color: #C4C3E3;
+  }
+  button {
+    background-color: #FDF8E2;
+  }
+}
+
+#error-message {
+  color: #ff4d4d;
+  display: none;
+}
+
+/* Content section */
+.container{
+padding-bottom: 20px;
+padding-left: 20px;
+padding-right: 20px;
+margin-top: 10px;
+}
+
+.todo-list{
+  padding: 10px;
+  list-style-type: none;
+}
+
+.todo-item{
+  padding: 10px;
+  border-bottom: 1px solid #FCDD9D;
+  background-color: #f9edd3;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+input[type=text] {
+  width:60%;
+  padding: 15px 10px;
+  box-sizing: border-box;
+  border: 2px solid #FCDD9D;
+  background-color: #FDF8E2;
+  color: #504E76;
+  border-radius: 8px;
+}
+
+.todo-form{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+
+/* CHECK BOX */
+.container-checkbox {
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #FDF8E2;
+  margin-top: 2px;
+  border: 2px solid #FCDD9D;
+  border-radius: 5px;
+}
+
+/* On mouse-over, add a green background color */
+.container-checkbox:hover input ~ .checkmark {
+  background-color: #FCDD9D;
+  
+}
+
+/* When the checkbox is checked, add a background */
+.container-checkbox input:checked ~ .checkmark {
+  background-color: #FCDD9D;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container-checkbox .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
