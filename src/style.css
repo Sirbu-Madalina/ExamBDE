@@ -235,8 +235,8 @@ input[type=text] {
 }
 
 /* Priority */
-.priority-select {
-  width:60%;
+.select {
+  width:30%;
   padding: 15px 10px;
   box-sizing: border-box;
   border: 2px solid #FCDD9D;
