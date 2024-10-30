@@ -13,10 +13,14 @@
 
       <form class="todo-form">
         <input type="text" id="todo-input" class="hidden" placeholder="Add a new todo" />
-        <button type="button" class="button-add">Add
-          <span class="button-icon"><ion-icon name="add-outline"></ion-icon></span>
-        </button> 
+        <select id="priority-select">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+        <button type="button" class="button-add">Add</button>
       </form>
+      
       
       <!-- error handling message : CSS added:: .input-error & #error-message -->
       <p id="error-message">Please enter a todo item</p>

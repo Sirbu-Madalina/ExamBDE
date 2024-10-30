@@ -7,7 +7,9 @@ export interface Todo {
   id: number;
   text: string;
   completed: boolean;
+  priority: 'low' | 'medium' | 'high';
 }
+
 
 // Step 3: Initialize an empty array to store todos
 // Initialize an empty array: This array will store the list of todos.
@@ -20,10 +22,12 @@ const todoForm = document.querySelector('.todo-form') as HTMLFormElement;
 const todoList = document.getElementById('todo-list') as HTMLUListElement;
 const errorMessage = document.getElementById('error-message') as HTMLParagraphElement;
 const addButton = document.querySelector('.button-add') as HTMLButtonElement;
+const prioritySelect = document.getElementById('priority-select') as HTMLSelectElement; // Make sure this is defined in your HTML
 
 // Add event listener for the "Add" button
 addButton.addEventListener('click', () => {
   const text = todoInput.value.trim();
+  const priority = prioritySelect.value as 'low' | 'medium' | 'high'; // Capture the priority value
   
   if (text === '') {
     // Show error if input is empty
@@ -34,23 +38,24 @@ addButton.addEventListener('click', () => {
     // Add the todo if input is not empty
     todoInput.classList.remove('input-error');
     errorMessage.style.display = 'none';
-    addTodo(text);
+    addTodo(text, priority); // Pass the priority here
     todoInput.value = ''; // Clear the input field
   }
 });
 
 // Step 5: Function to add a new todo
 // Function to add a new todo: This function creates a new todo object and adds it to the array.
-export const addTodo = (text: string): void => {
+export const addTodo = (text: string, priority: 'low' | 'medium' | 'high'): void => {
   const newTodo: Todo = {
-    id: Date.now(), // Generate a unique ID based on the current timestamp
+    id: Date.now(),
     text: text,
     completed: false,
+    priority: priority,
   };
   todos.push(newTodo);
-  console.log("Todo added: ", todos); // Log the updated list of todos to the console
-  renderTodos(); // Render the updated list of todos => create the function next
+  renderTodos();
 };
+
 
 const renderTodos = (): void => {
   // Clear the current list
@@ -59,10 +64,11 @@ const renderTodos = (): void => {
   // Iterate over the todos array and create list items for each todo
   todos.forEach(todo => {
     const li = document.createElement('li');
-    li.className = 'todo-item';
+    li.className = `todo-item priority-${todo.priority}`;
     
     // Create the HTML structure with a checkbox and the task text
     li.innerHTML = `
+      <span>${todo.text} - <strong>${todo.priority.toUpperCase()}</strong></span>
       <label class="container-checkbox">
       <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''} />
       <span class="checkmark"></span>
@@ -74,6 +80,7 @@ const renderTodos = (): void => {
       <button class="edit-btn">Edit
       <ion-icon name="create-outline"></ion-icon>
       </button>
+      
       
     `;
 
@@ -90,6 +97,7 @@ const renderTodos = (): void => {
   todoForm.addEventListener('submit', (event: Event) => {
   event.preventDefault(); // Prevent the default form submission behavior
   const text = todoInput.value.trim(); // Trim whitespace from input value
+  const priority = prioritySelect.value as 'low' | 'medium' | 'high'; // Capture the priority value
 
   if (text === '') {
     // If the input is empty, show error message
@@ -100,7 +108,7 @@ const renderTodos = (): void => {
     // If the input is valid, continue with adding todo
     todoInput.classList.remove('input-error'); // Clear any error styling
     errorMessage.style.display = 'none'; // Hide error message
-    addTodo(text); // Add the todo item
+    addTodo(text, priority); // Pass the priority here
     todoInput.value = ''; // Clear the input field for new todos
   }
 });
