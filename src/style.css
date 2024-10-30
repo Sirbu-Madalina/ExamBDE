@@ -162,7 +162,6 @@ input[type=text] {
 }
 
 
-
 /* CHECK BOX */
 .container-checkbox {
   position: relative;
@@ -237,10 +236,13 @@ input[type=text] {
 
 /* Priority */
 .priority-select {
-  margin-left: 10px;
-  padding: 2px 5px;
-  border-radius: 5px;
-  font-size: 12px;
+  width:60%;
+  padding: 15px 10px;
+  box-sizing: border-box;
+  border: 2px solid #FCDD9D;
+  background-color: #FDF8E2;
+  color: #504E76;
+  border-radius: 8px;
 }
 
 .low {
