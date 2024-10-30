@@ -8,6 +8,7 @@ export interface Todo {
   text: string;
   completed: boolean;
   priority: 'low' | 'medium' | 'high';
+  dueDate: string; // Add due date
 }
 
 
@@ -23,12 +24,15 @@ const todoList = document.getElementById('todo-list') as HTMLUListElement;
 const errorMessage = document.getElementById('error-message') as HTMLParagraphElement;
 const addButton = document.querySelector('.button-add') as HTMLButtonElement;
 const prioritySelect = document.getElementById('priority-select') as HTMLSelectElement; // Make sure this is defined in your HTML
+const dueDateInput = document.getElementById('due-date-input') as HTMLInputElement;
+
 
 // Add event listener for the "Add" button
 addButton.addEventListener('click', () => {
   const text = todoInput.value.trim();
   const priority = prioritySelect.value as 'low' | 'medium' | 'high'; // Capture the priority value
-  
+  const dueDate = dueDateInput.value;
+
   if (text === '') {
     // Show error if input is empty
     console.log("Please enter a todo item");
@@ -38,19 +42,20 @@ addButton.addEventListener('click', () => {
     // Add the todo if input is not empty
     todoInput.classList.remove('input-error');
     errorMessage.style.display = 'none';
-    addTodo(text, priority); // Pass the priority here
+    addTodo(text, priority, dueDate); // Pass the priority here and date
     todoInput.value = ''; // Clear the input field
   }
 });
 
 // Step 5: Function to add a new todo
 // Function to add a new todo: This function creates a new todo object and adds it to the array.
-export const addTodo = (text: string, priority: 'low' | 'medium' | 'high'): void => {
+export const addTodo = (text: string, priority: 'low' | 'medium' | 'high', dueDate: string): void => {
   const newTodo: Todo = {
     id: Date.now(),
     text: text,
     completed: false,
     priority: priority,
+    dueDate: dueDate, // Add due date here
   };
   todos.push(newTodo);
   renderTodos();
@@ -74,6 +79,7 @@ const renderTodos = (): void => {
       </label>
       <span style="text-decoration: ${todo.completed ? 'line-through' : 'none'}">${todo.text}</span>
       <span><strong>${todo.priority.toUpperCase()}</strong></span>
+      <span>Due: ${todo.dueDate}</span>
       <button class="remove-btn">Remove
       <ion-icon name="trash-outline"></ion-icon>
       </button>
@@ -98,6 +104,7 @@ const renderTodos = (): void => {
   event.preventDefault(); // Prevent the default form submission behavior
   const text = todoInput.value.trim(); // Trim whitespace from input value
   const priority = prioritySelect.value as 'low' | 'medium' | 'high'; // Capture the priority value
+  const dueDate = dueDateInput.value;
 
   if (text === '') {
     // If the input is empty, show error message
@@ -108,7 +115,7 @@ const renderTodos = (): void => {
     // If the input is valid, continue with adding todo
     todoInput.classList.remove('input-error'); // Clear any error styling
     errorMessage.style.display = 'none'; // Hide error message
-    addTodo(text, priority); // Pass the priority here
+    addTodo(text, priority, dueDate); // Pass the priority here
     todoInput.value = ''; // Clear the input field for new todos
   }
 });
