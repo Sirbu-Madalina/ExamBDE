@@ -73,7 +73,7 @@ const renderTodos = (): void => {
       <span class="checkmark"></span>
       </label>
       <span style="text-decoration: ${todo.completed ? 'line-through' : 'none'}">${todo.text}</span>
-      <span>${todo.text} - <strong>${todo.priority.toUpperCase()}</strong></span>
+      <span><strong>${todo.priority.toUpperCase()}</strong></span>
       <button class="remove-btn">Remove
       <ion-icon name="trash-outline"></ion-icon>
       </button>
