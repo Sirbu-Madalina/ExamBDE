@@ -236,13 +236,14 @@ input[type=text] {
 
 /* Priority */
 .priority-container {
-  width:30%;
+  width: 20%;
   padding: 15px 10px;
   box-sizing: border-box;
   border: 2px solid #FCDD9D;
   background-color: #FDF8E2;
   color: #504E76;
   border-radius: 8px;
+  margin-left: 5px;
 }
 
 .low {
@@ -259,3 +260,5 @@ input[type=text] {
   background-color: #F44336; /* Red */
   color: white;
 }
+
+/* Date Picker */
