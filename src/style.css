@@ -236,24 +236,24 @@ input[type=text] {
 }
 
 /* Priority */
-.priority {
+.priority-select {
   margin-left: 10px;
   padding: 2px 5px;
   border-radius: 5px;
   font-size: 12px;
 }
 
-.priority.low {
+.low {
   background-color: #4CAF50; /* Green */
   color: white;
 }
 
-.priority.medium {
+.medium {
   background-color: #FFC107; /* Orange */
   color: white;
 }
 
-.priority.high {
+.high {
   background-color: #F44336; /* Red */
   color: white;
 }
