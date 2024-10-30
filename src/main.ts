@@ -68,10 +68,10 @@ const renderTodos = (): void => {
     
     // Create the HTML structure with a checkbox and the task text
     li.innerHTML = `
-      <span>${todo.text} - <strong>${todo.priority.toUpperCase()}</strong></span>
       <label class="container-checkbox">
       <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''} />
       <span class="checkmark"></span>
+      <span>${todo.text} - <strong>${todo.priority.toUpperCase()}</strong></span>
       </label>
       <span style="text-decoration: ${todo.completed ? 'line-through' : 'none'}">${todo.text}</span>
       <button class="remove-btn">Remove
