@@ -259,3 +259,15 @@ input[type=text] {
   background-color: #F44336; /* Red */
   color: white;
 }
+
+
+.date-pick{
+  width:40%;
+  padding: 15px 10px;
+  box-sizing: border-box;
+  border: 2px solid #FCDD9D;
+  background-color: #FDF8E2;
+  color: #504E76;
+  border-radius: 8px;
+  margin-right: 5px;
+}
