@@ -6,7 +6,7 @@ fixture `TODO App Due Date Feature`
 // Define selectors
 const todoInput = Selector('#todo-input');
 const prioritySelect = Selector('#priority-select');
-const dueDateInput = Selector('#due-date-input');
+const dueDateInput = Selector('#.date-pick');
 const addButton = Selector('.button-add');
 const todoList = Selector('#todo-list');
 const todoItem = Selector('.todo-item');
