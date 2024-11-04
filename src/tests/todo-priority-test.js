@@ -1,33 +1,49 @@
 import { Selector } from 'testcafe';
 
-fixture `To-Do Priority Tests`
-    .page `https://sirbumadalina.dk/test/todo/`;
+// Selectors
+const todoInput = Selector('#todo-input');
+const addButton = Selector('.button-add');
+const prioritySelect = Selector('#priority-select');
+const dueDateInput = Selector('#due-date-input');
+const todoItem = Selector('.todo-item');
 
-test('Add to-do with different priorities', async t => {
-    const todoInput = Selector('#todo-input');            // Adjust ID based on your HTML
-    const prioritySelect = Selector('#priority-select');  // Priority dropdown
-    const addButton = Selector('.button-add');            // Adjust based on your button class
+fixture `Todo App Testing`
+  .page `https://sirbumadalina.dk/test/todo/`; // Adjust with the correct local URL for your app
 
-    // Add a to-do with low priority
+test('Add a new todo with high priority', async t => {
     await t
-        .typeText(todoInput, 'Buy groceries')
+        .typeText(todoInput, 'Test high priority todo')
         .click(prioritySelect)
-        .click(prioritySelect.find('option').withText('Low'))
-        .click(addButton);
+        .click(prioritySelect.find('option').withText('high'))
+        .typeText(dueDateInput, '2024-12-31')
+        .click(addButton)
+        .expect(todoItem.withText('Test high priority todo').exists).ok()
+        .expect(todoItem.withText('HIGH').exists).ok();
+});
 
-    // Add a to-do with medium priority
+test('Edit a todo item', async t => {
     await t
-        .typeText(todoInput, 'Clean the house')
-        .click(prioritySelect)
-        .click(prioritySelect.find('option').withText('Medium'))
-        .click(addButton);
+        // This assumes there's a todo item with text 'Test high priority todo'
+        .click(todoItem.withText('Test high priority todo').find('.edit-btn'))
+        .typeText(todoInput, 'Updated todo', { replace: true })
+        .click(addButton)
+        .expect(todoItem.withText('Updated todo').exists).ok();
+});
 
-    // Add a to-do with high priority
+test('Remove a todo item', async t => {
     await t
-        .typeText(todoInput, 'Prepare presentation')
-        .click(prioritySelect)
-        .click(prioritySelect.find('option').withText('High'))
-        .click(addButton);
+        .click(todoItem.withText('Updated todo').find('.remove-btn'))
+        .expect(todoItem.withText('Updated todo').exists).notOk();
+});
 
-    // Assertions can be added to verify that the items appear with correct priority labels
+test('Toggle a todo item completed status', async t => {
+    await t
+        .click(todoItem.withText('Test high priority todo').find('.todo-checkbox'))
+        .expect(todoItem.withText('Test high priority todo').find('span').withExactText('Test high priority todo').style('text-decoration')).contains('line-through');
+});
+
+test('Clear all completed todos', async t => {
+    await t
+        .click(Selector('#clear-completed-btn'))
+        .expect(todoItem.filter('.completed').exists).notOk();
 });
