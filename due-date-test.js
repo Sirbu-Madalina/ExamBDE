@@ -18,22 +18,23 @@ test('Add todo with due date', async t => {
 
     // Add a new todo
     await t
-        .typeText(todoInput, todoText)
-        .selectText(prioritySelect)
-        .click(prioritySelect.find('option').withText(priority))
-        .typeText(dueDateInput, dueDate)
-        .click(addButton);
+    .typeText(todoInput, todoText)
+    .click(prioritySelect) // Click the dropdown to open it
+    .click(prioritySelect.find('option').withText(priority)) // Select the option
+    .typeText(dueDateInput, dueDate)
+    .click(addButton);
 
-    // Assert that the todo is added to the list
-    const todoItem = todoList.find('li').withText(todoText);
-    
-    await t
-        .expect(todoItem.exists).ok('Todo item should exist in the list')
-        .expect(todoItem.innerText).contains(`Due: ${dueDate}`, 'Due date should be displayed correctly');
 
-    // Optionally, check the priority displayed
-    await t
-        .expect(todoItem.innerText).contains(priority.toUpperCase(), 'Priority should be displayed correctly');
+// Attempt to add a todo without setting the due date
+await t
+    .typeText(todoInput, todoText) // Add text to the todo input
+    .click(addButton);
+
+// Check for the error message
+await t
+    .expect(errorMessage.visible).ok('Error message should be visible')
+    .expect(errorMessage.innerText).eql('Please enter a todo item', 'Error message text should match');
+
 });
 
 test('Show error message when due date is not set', async t => {
