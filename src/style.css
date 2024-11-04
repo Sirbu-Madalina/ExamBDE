@@ -162,7 +162,6 @@ input[type=text] {
 }
 
 
-
 /* CHECK BOX */
 .container-checkbox {
   position: relative;
@@ -234,3 +233,32 @@ input[type=text] {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+/* Priority */
+.priority-container {
+  width: 20%;
+  padding: 15px 10px;
+  box-sizing: border-box;
+  border: 2px solid #FCDD9D;
+  background-color: #FDF8E2;
+  color: #504E76;
+  border-radius: 8px;
+  margin-left: 5px;
+}
+
+.low {
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
+.medium {
+  background-color: #FFC107; /* Orange */
+  color: white;
+}
+
+.high {
+  background-color: #F44336; /* Red */
+  color: white;
+}
+
+/* Date Picker */

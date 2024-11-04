@@ -7,7 +7,9 @@ export interface Todo {
   id: number;
   text: string;
   completed: boolean;
+  priority: 'low' | 'medium' | 'high';
 }
+
 
 // Step 3: Initialize an empty array to store todos
 // Initialize an empty array: This array will store the list of todos.
@@ -20,10 +22,12 @@ const todoForm = document.querySelector('.todo-form') as HTMLFormElement;
 const todoList = document.getElementById('todo-list') as HTMLUListElement;
 const errorMessage = document.getElementById('error-message') as HTMLParagraphElement;
 const addButton = document.querySelector('.button-add') as HTMLButtonElement;
+const prioritySelect = document.getElementById('priority-select') as HTMLSelectElement; // Make sure this is defined in your HTML
 
 // Add event listener for the "Add" button
 addButton.addEventListener('click', () => {
   const text = todoInput.value.trim();
+  const priority = prioritySelect.value as 'low' | 'medium' | 'high'; // Capture the priority value
   
   if (text === '') {
     // Show error if input is empty
@@ -34,23 +38,24 @@ addButton.addEventListener('click', () => {
     // Add the todo if input is not empty
     todoInput.classList.remove('input-error');
     errorMessage.style.display = 'none';
-    addTodo(text);
+    addTodo(text, priority); // Pass the priority here
     todoInput.value = ''; // Clear the input field
   }
 });
 
 // Step 5: Function to add a new todo
 // Function to add a new todo: This function creates a new todo object and adds it to the array.
-export const addTodo = (text: string): void => {
+export const addTodo = (text: string, priority: 'low' | 'medium' | 'high'): void => {
   const newTodo: Todo = {
-    id: Date.now(), // Generate a unique ID based on the current timestamp
+    id: Date.now(),
     text: text,
     completed: false,
+    priority: priority,
   };
   todos.push(newTodo);
-  console.log("Todo added: ", todos); // Log the updated list of todos to the console
-  renderTodos(); // Render the updated list of todos => create the function next
+  renderTodos();
 };
+
 
 const renderTodos = (): void => {
   // Clear the current list
@@ -59,7 +64,7 @@ const renderTodos = (): void => {
   // Iterate over the todos array and create list items for each todo
   todos.forEach(todo => {
     const li = document.createElement('li');
-    li.className = 'todo-item';
+    li.className = `todo-item priority-${todo.priority}`;
     
     // Create the HTML structure with a checkbox and the task text
     li.innerHTML = `
@@ -68,12 +73,14 @@ const renderTodos = (): void => {
       <span class="checkmark"></span>
       </label>
       <span style="text-decoration: ${todo.completed ? 'line-through' : 'none'}">${todo.text}</span>
+      <span><strong>${todo.priority.toUpperCase()}</strong></span>
       <button class="remove-btn">Remove
       <ion-icon name="trash-outline"></ion-icon>
       </button>
       <button class="edit-btn">Edit
       <ion-icon name="create-outline"></ion-icon>
       </button>
+      
       
     `;
 
@@ -90,6 +97,7 @@ const renderTodos = (): void => {
   todoForm.addEventListener('submit', (event: Event) => {
   event.preventDefault(); // Prevent the default form submission behavior
   const text = todoInput.value.trim(); // Trim whitespace from input value
+  const priority = prioritySelect.value as 'low' | 'medium' | 'high'; // Capture the priority value
 
   if (text === '') {
     // If the input is empty, show error message
@@ -100,7 +108,7 @@ const renderTodos = (): void => {
     // If the input is valid, continue with adding todo
     todoInput.classList.remove('input-error'); // Clear any error styling
     errorMessage.style.display = 'none'; // Hide error message
-    addTodo(text); // Add the todo item
+    addTodo(text, priority); // Pass the priority here
     todoInput.value = ''; // Clear the input field for new todos
   }
 });
@@ -150,9 +158,9 @@ const editTodo = (id: number): void => {
   }
 };
 
-/**
+/* 
  * color picker
- */
+ 
 // Function to change the background color of the page based on the color picker value
 const changeBackgroundColor = (color: string): void => {
   document.body.style.backgroundColor = color;
@@ -169,39 +177,18 @@ const initializeColorPicker = (): void => {
   } else {
     console.error('Color picker element not found');
   }
-};
+}; 
 
 // Call the initializeColorPicker function when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
   initializeColorPicker();
-});
-
-// Step 6.1: Function to render the list of todos
-// Initial render
-renderTodos(); // Call the renderTodos function to display the initial list of todos : Should be at the end of the code to ensure that the function is defined before it is called.
-// The initial render is important to display the list of todos when the page is first loaded. Without it, the list would be empty until a new todo is added.
-// Move it when code is complete ( refactoring ) 
-
-
-
-
-
-/** 
- * Kristian: 6th of September 2024, BDE
- * 
- * This is the list of optional features that can be added to the todo list application:
- * You must make at least one of these features to complete the project. The more the merrier.
- * In your submission video, please mention which feature you have implemented and demonstrate how it works. Go through the code and explain how you implemented the feature and how it works.
- * IF, you want to implement something not on list, you can do that as well.
-*/
-
+}); */
 
 //Optional features list: 
 
 // Option 1: Add a button to toggle the completed status of a todo item
 // Function to toggle the completed status of a todo + 
 // Add a button to toggle the completed status of a todo item
-
 // Function to add event listener to the checkbox
 const addCheckboxListener = (li: HTMLLIElement, id: number): void => {
 const checkbox = li.querySelector('.todo-checkbox') as HTMLInputElement;  // Find the checkbox within the li
@@ -249,67 +236,9 @@ document.addEventListener('DOMContentLoaded', () => {
   toggleAllBtn?.addEventListener('click', toggleAllTodos);
 });
 
+// Step 6.1: Function to render the list of todos
+// Initial render
+renderTodos(); // Call the renderTodos function to display the initial list of todos : Should be at the end of the code to ensure that the function is defined before it is called.
+// The initial render is important to display the list of todos when the page is first loaded. Without it, the list would be empty until a new todo is added.
+// Move it when code is complete ( refactoring ) 
 
-// Option 3: Add a button to toggle all todos
-// Edit a todo item and update it
-// Add an input field to edit a todo item
-// Save the updated todo item
-// Cancel the editing of a todo item
-// Add a button to cancel the editing of a todo item
-
-// Option 4: Add a button to filter todos by status
-// Add a button to filter todos by status
-// Function to filter todos by status
-
-// Option 5: Add a button to sort todos by status
-// Add a button to sort todos by status
-// Function to sort todos by status
-
-// Option 6: Due Date for Todos:
-// Add a date input field to set a due date for each todo item.
-// Display the due date next to each todo item.
-// Highlight overdue todos.
-// Priority Levels:
-
-// Option 7: Add a dropdown to set the priority level (e.g., Low, Medium, High) for each todo item.
-// Display the priority level next to each todo item.
-// Sort todos by priority.
-// Search Functionality:
-
-// Option 8: Add a search input field to filter todos based on the search query.
-// Display only the todos that match the search query.
-// Category Tags:
-
-// Option 9: Add a text input field to assign category tags to each todo item.
-// Display the tags next to each todo item.
-// Filter todos by category tags.
-// Progress Indicator:
-
-// Option 10: Add a progress bar to show the percentage of completed todos.
-// Update the progress bar as todos are marked as completed or incomplete.
-// Dark Mode Toggle:
-
-// Option 11: Add a button to toggle between light and dark modes.
-// Change the app's theme based on the selected mode.
-// Export/Import Todos:
-
-
-// Option 12: Add buttons to export the list of todos to a JSON file.
-// Add functionality to import todos from a JSON file.
-// Notifications:
-
-// Option 13: Add notifications to remind users of due todos.
-// Use the Notification API to show browser notifications.
-
-// Option 14: Local Storage:
-// Save the list of todos to local storage.
-// Retrieve the todos from local storage on page load.
-// Add a button to clear all todos from local storage.
-
-// Option 15: JSDOC Comments:
-// Add JSDoc comments to document the functions and interfaces in the code.
-// Link : https://jsdoc.app/
-
-// Optional 16: Handle Errors:
-// Add error handling for user input validation. Show red text or border for invalid input.
-// Display error messages for invalid input.
