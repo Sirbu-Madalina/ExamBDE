@@ -212,10 +212,10 @@ const todo = todos.find(todo => todo.id === id);
 };
 
 // Event listener for the "Add" button to toggle the visibility of the input field
-addButton.addEventListener('click', () => {
-todoInput.classList.toggle('hidden');  // Toggle the 'hidden' class to show/hide the input field
-todoInput.focus();  // Optionally focus on the input field when shown
-});
+//addButton.addEventListener('click', () => {
+//todoInput.classList.toggle('hidden');  // Toggle the 'hidden' class to show/hide the input field
+//todoInput.focus();  // Optionally focus on the input field when shown
+//});
 
 
 // Option 2: Add a button to clear all completed todos
