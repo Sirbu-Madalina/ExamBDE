@@ -11,30 +11,20 @@ const todoList = Selector('#todo-list');
 const errorMessage = Selector('#error-message');
 
 test('Add todo with due date', async t => {
-    // Define test data
     const todoText = 'Test due date todo';
     const priority = 'medium';
-    const dueDate = '2024-12-01'; // Adjust the due date as necessary
+    const dueDate = '2024-12-01';
 
-    // Add a new todo
+    await t.wait(1000); // Optional: Wait for the dropdown to be available
+
     await t
-    .typeText(todoInput, todoText)
-    .click(prioritySelect) // Click the dropdown to open it
-    .click(prioritySelect.find('option').withText(priority)) // Select the option
-    .typeText(dueDateInput, dueDate)
-    .click(addButton);
+        .typeText(todoInput, todoText)
+        .click(prioritySelect) 
+        .click(prioritySelect.find('option').withText(priority))
+        .typeText(dueDateInput, dueDate)
+        .click(addButton);
 
-
-// Attempt to add a todo without setting the due date
-await t
-    .typeText(todoInput, todoText) // Add text to the todo input
-    .click(addButton);
-
-// Check for the error message
-await t
-    .expect(errorMessage.visible).ok('Error message should be visible')
-    .expect(errorMessage.innerText).eql('Please enter a todo item', 'Error message text should match');
-
+    // Verify the todo is added (if applicable, check the todo list here)
 });
 
 test('Show error message when due date is not set', async t => {
@@ -44,8 +34,8 @@ test('Show error message when due date is not set', async t => {
         .typeText(todoInput, todoText)
         .click(addButton);
 
-    // Check for error message
     await t
+        .expect(errorMessage.exists).ok('Error message element should exist')
         .expect(errorMessage.visible).ok('Error message should be visible')
         .expect(errorMessage.innerText).eql('Please enter a todo item', 'Error message text should match');
 });
