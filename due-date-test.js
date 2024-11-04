@@ -1,39 +1,50 @@
 import { Selector } from 'testcafe';
 
-fixture `TODO App Due Date Feature`
-    .page `https://sirbumadalina.dk/test/todo/`; 
+fixture`Todo App Due Date Feature`
+    .page`https://sirbumadalina.dk/test/todo/`;
 
-// Define selectors
 const todoInput = Selector('#todo-input');
 const prioritySelect = Selector('#priority-select');
-const dueDateInput = Selector('#.date-pick');
+const dueDateInput = Selector('#due-date-input');
 const addButton = Selector('.button-add');
 const todoList = Selector('#todo-list');
-const todoItem = Selector('.todo-item');
+const errorMessage = Selector('#error-message');
 
-// Test to edit a TODO item's due date
-test('Edit TODO item due date', async t => {
-    const sampleTodoText = 'Edit Due Date TODO';
-    const initialDueDate = '2024-11-30';
-    const newDueDate = '2025-01-15';
-    
-    // Step 1: Add a new TODO item with initial due date
+test('Add todo with due date', async t => {
+    // Define test data
+    const todoText = 'Test due date todo';
+    const priority = 'medium';
+    const dueDate = '2024-12-01'; // Adjust the due date as necessary
+
+    // Add a new todo
     await t
-        .typeText(todoInput, sampleTodoText)
-        .click(prioritySelect)
-        .click(prioritySelect.find('option').withText('Medium'))
-        .typeText(dueDateInput, initialDueDate)
-        .click(addButton)
-        .expect(todoList.childElementCount).eql(1)
-        .expect(todoItem.withText(`${sampleTodoText}`).exists).ok()
-        .expect(todoItem.withText(`Due: ${initialDueDate}`).exists).ok();
+        .typeText(todoInput, todoText)
+        .selectText(prioritySelect)
+        .click(prioritySelect.find('option').withText(priority))
+        .typeText(dueDateInput, dueDate)
+        .click(addButton);
+
+    // Assert that the todo is added to the list
+    const todoItem = todoList.find('li').withText(todoText);
     
-    // Step 2: Edit the due date of the added TODO item
     await t
-        .click(todoItem.find('.edit-btn'))  // Click edit button
-        .setNativeDialogHandler(() => null) // Handle native dialog prompts if necessary
-        .typeText(dueDateInput, newDueDate, { replace: true })  // Replace old due date with new
-        .expect(dueDateInput.value).eql(newDueDate)  // Confirm the new due date is displayed
-        .click(todoItem.find('.edit-btn'))  // Confirm the edit
-        .expect(todoItem.withText(`Due: ${newDueDate}`).exists).ok(); // Verify the due date update
+        .expect(todoItem.exists).ok('Todo item should exist in the list')
+        .expect(todoItem.innerText).contains(`Due: ${dueDate}`, 'Due date should be displayed correctly');
+
+    // Optionally, check the priority displayed
+    await t
+        .expect(todoItem.innerText).contains(priority.toUpperCase(), 'Priority should be displayed correctly');
+});
+
+test('Show error message when due date is not set', async t => {
+    const todoText = 'Test todo without due date';
+
+    await t
+        .typeText(todoInput, todoText)
+        .click(addButton);
+
+    // Check for error message
+    await t
+        .expect(errorMessage.visible).ok('Error message should be visible')
+        .expect(errorMessage.innerText).eql('Please enter a todo item', 'Error message text should match');
 });
