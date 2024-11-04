@@ -1,7 +1,7 @@
 import { Selector } from 'testcafe';
 
 fixture`Todo App Priority Feature`
-    .page`https://sirbumadalina.dk/test/todo/`; // Replace `your-port` with the correct port number for your app
+    .page`https://sirbumadalina.dk/test/todo/`; 
 
 test('Add a new todo with different priority levels', async t => {
     const todoInput = Selector('#todo-input');
