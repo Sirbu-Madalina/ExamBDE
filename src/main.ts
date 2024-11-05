@@ -1,8 +1,7 @@
 // 1 Import the CSS file: This ensures that the styles are applied to the HTML elements.
 import './style.css';
 
-// Step 2: Define the Todo interface
-// Define the Todo interface: This interface defines the structure of a todo item.
+// Step 2: Define the Todo interface. This interface defines the structure of a todo item.
 export interface Todo {
   id: number;
   text: string;
@@ -11,13 +10,10 @@ export interface Todo {
   dueDate: string; // Add due date
 }
 
-
-// Step 3: Initialize an empty array to store todos
-// Initialize an empty array: This array will store the list of todos.
+// Step 3: Initialize an empty array: This array will store the list of todos.
 export let todos: Todo[] = []; 
 
-// Step 4: Get references to the HTML elements
-// Get references to the HTML elements: These references will be used to interact with the DOM
+// Step 4: Get references to the HTML elements: These references will be used to interact with the DOM
 const todoInput = document.getElementById('todo-input') as HTMLInputElement;
 const todoForm = document.querySelector('.todo-form') as HTMLFormElement;
 const todoList = document.getElementById('todo-list') as HTMLUListElement;
@@ -26,8 +22,7 @@ const addButton = document.querySelector('.button-add') as HTMLButtonElement;
 const prioritySelect = document.getElementById('priority-select') as HTMLSelectElement; // Make sure this is defined in your HTML
 const dueDateInput = document.getElementById('due-date-input') as HTMLInputElement;
 
-
-// Add event listener for the "Add" button
+// Step 5: Add event listener for the "Add" button
 addButton.addEventListener('click', () => {
   const text = todoInput.value.trim();
   const priority = prioritySelect.value as 'low' | 'medium' | 'high'; // Capture the priority value
@@ -47,8 +42,7 @@ addButton.addEventListener('click', () => {
   }
 });
 
-// Step 5: Function to add a new todo
-// Function to add a new todo: This function creates a new todo object and adds it to the array.
+// Step 6: Function to add a new todo: This function creates a new todo object and adds it to the array.
 export const addTodo = (text: string, priority: 'low' | 'medium' | 'high', dueDate: string): void => {
   const newTodo: Todo = {
     id: Date.now(),
@@ -61,7 +55,7 @@ export const addTodo = (text: string, priority: 'low' | 'medium' | 'high', dueDa
   renderTodos();
 };
 
-
+// Step 7: Render todos
 const renderTodos = (): void => {
   // Clear the current list
   todoList.innerHTML = '';
@@ -86,20 +80,16 @@ const renderTodos = (): void => {
       <button class="edit-btn">Edit
       <ion-icon name="create-outline"></ion-icon>
       </button>
-      
-      
     `;
-
     // Add event listeners for the buttons and checkbox
     addRemoveButtonListener(li, todo.id);   // Remove button
     addEditButtonListener(li, todo.id);     // Edit button
     addCheckboxListener(li, todo.id);       // Checkbox toggle
-
     todoList.appendChild(li);
   });
 };
 
-// Step 7: Event listener for the form submission
+// Step 8: Event listener for the form submission
   todoForm.addEventListener('submit', (event: Event) => {
   event.preventDefault(); // Prevent the default form submission behavior
   const text = todoInput.value.trim(); // Trim whitespace from input value
@@ -120,40 +110,26 @@ const renderTodos = (): void => {
   }
 });
 
-
-// Step 8: Function to removes all a todo by ID
+// Step 9: Function to removes all a todo by ID
 // Function to add event listener to the remove button - this function has an callback function that removes the todo item from the array.
 const addRemoveButtonListener = (li: HTMLLIElement, id: number): void => {
   const removeButton = li.querySelector('button');
   removeButton?.addEventListener('click', () => removeTodo(id)); // We have an optional chaining operator here to avoid errors if the button is not found - for example, if the button is removed from the DOM.
 };
 
-/*
-example of explicit null checking - without optional chaining operator, but basically the same as above
-const addRemoveButtonListener = (li: HTMLLIElement, id: number): void => {
-  const removeButton = li.querySelector('button');
-  if (removeButton) {
-    removeButton.addEventListener('click', () => removeTodoById(id));
-  } else {
-    console.error(`Remove button not found for todo item with ID: ${id}`);
-  }
-};
-*/
-
-// Step 8: Function to remove a todo by ID
-// Function to remove a todo by ID: This function removes a todo from the array based on its ID.
+// Step 10: Function to remove a todo by ID. This function removes a todo from the array based on its ID.
 export const removeTodo = (id: number): void => {
   todos = todos.filter(todo => todo.id !== id);
   renderTodos(); // Re-render the updated list of todos
 }; 
 
-// Function to add event listener for the edit button
+// Step 11: Function to add event listener for the edit button
 const addEditButtonListener = (li: HTMLLIElement, id: number): void => {
   const editButton = li.querySelector('.edit-btn');  // Select the Edit button within the li
   editButton?.addEventListener('click', () => editTodo(id));  // Attach the click event listener
 };
 
-// Edit function - prompt user to edit the todo
+// Step 12: Edit function - prompt user to edit the todo
 const editTodo = (id: number): void => {
   const todo = todos.find(todo => todo.id === id);
   if (todo) {
@@ -165,34 +141,7 @@ const editTodo = (id: number): void => {
   }
 };
 
-/* 
- * color picker
- 
-// Function to change the background color of the page based on the color picker value
-const changeBackgroundColor = (color: string): void => {
-  document.body.style.backgroundColor = color;
-};
-
-// Function to initialize the color picker event listener
-const initializeColorPicker = (): void => {
-  const colorPicker = document.getElementById('colorPicker') as HTMLInputElement; // encapsulate the color picker element to this function
-  if (colorPicker) {
-    colorPicker.addEventListener('input', (event: Event) => {
-      const target = event.target as HTMLInputElement;
-      changeBackgroundColor(target.value);
-    });
-  } else {
-    console.error('Color picker element not found');
-  }
-}; 
-
-// Call the initializeColorPicker function when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-  initializeColorPicker();
-}); */
-
 //Optional features list: 
-
 // Option 1: Add a button to toggle the completed status of a todo item
 // Function to toggle the completed status of a todo + 
 // Add a button to toggle the completed status of a todo item
@@ -201,7 +150,6 @@ const addCheckboxListener = (li: HTMLLIElement, id: number): void => {
 const checkbox = li.querySelector('.todo-checkbox') as HTMLInputElement;  // Find the checkbox within the li
 checkbox?.addEventListener('change', () => toggleTodoStatus(id));  // Toggle the status on change event
 };
-
 // Function to toggle the completed status when the checkbox is changed
 const toggleTodoStatus = (id: number): void => {
 const todo = todos.find(todo => todo.id === id);
@@ -210,13 +158,6 @@ const todo = todos.find(todo => todo.id === id);
     renderTodos();  // Re-render the list to update the UI
   }
 };
-
-// Event listener for the "Add" button to toggle the visibility of the input field
-//addButton.addEventListener('click', () => {
-//todoInput.classList.toggle('hidden');  // Toggle the 'hidden' class to show/hide the input field
-//todoInput.focus();  // Optionally focus on the input field when shown
-//});
-
 
 // Option 2: Add a button to clear all completed todos
 // Add a button to clear all completed todos
@@ -243,9 +184,8 @@ document.addEventListener('DOMContentLoaded', () => {
   toggleAllBtn?.addEventListener('click', toggleAllTodos);
 });
 
-// Step 6.1: Function to render the list of todos
-// Initial render
+// Last Step: Function to render the list of todos
 renderTodos(); // Call the renderTodos function to display the initial list of todos : Should be at the end of the code to ensure that the function is defined before it is called.
 // The initial render is important to display the list of todos when the page is first loaded. Without it, the list would be empty until a new todo is added.
-// Move it when code is complete ( refactoring ) 
+
 
