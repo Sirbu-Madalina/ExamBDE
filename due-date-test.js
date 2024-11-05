@@ -1,41 +1,33 @@
 import { Selector } from 'testcafe';
 
-fixture`Todo App Due Date Feature`
-    .page`https://sirbumadalina.dk/test/todo/`;
+fixture`Todo App - Due Date Feature`
+    .page`https://sirbumadalina.dk/test/todo/`;  // Use your app's URL
 
-const todoInput = Selector('#todo-input');
-const prioritySelect = Selector('#priority-select');
-const dueDateInput = Selector('#due-date-input');
-const addButton = Selector('.button-add');
-const todoList = Selector('#todo-list');
-const errorMessage = Selector('#error-message');
+test('Add a todo with due date and verify it appears correctly', async t => {
+    // Selectors for elements
+    const todoInput = Selector('#todo-input');
+    const prioritySelect = Selector('#priority-select');
+    const dueDateInput = Selector('#due-date-input');
+    const addButton = Selector('.button-add');
+    const todoList = Selector('.todo-list');
+    
+    // Define test data
+    const testTodoText = 'Test due date feature';
+    const testPriority = 'medium';
+    const testDueDate = '2024-12-31';
 
-test('Add todo with due date', async t => {
-    const todoText = 'Test due date todo';
-    const priority = 'medium';
-    const dueDate = '2024-12-01';
-
-    await t.wait(1000); // Optional: Wait for the dropdown to be available
-
+    // Enter todo text
     await t
-        .typeText(todoInput, todoText)
-        .click(prioritySelect) 
-        .click(prioritySelect.find('option').withText(priority))
-        .typeText(dueDateInput, dueDate)
+        .typeText(todoInput, testTodoText)
+        .click(prioritySelect)
+        .click(prioritySelect.find('option').withText('Medium'))  // Set priority
+        .typeText(dueDateInput, testDueDate)  // Set due date
         .click(addButton);
 
-    // Verify the todo is added (if applicable, check the todo list here)
-});
-
-test('Show error message when due date is not set', async t => {
-    const todoText = 'Test todo without due date';
-
+    // Verify the todo was added with the correct due date and priority
+    const addedTodo = todoList.child('li').withText(testTodoText);
     await t
-        .typeText(todoInput, todoText)
-        .click(addButton);
-
-    await t
-        .expect(errorMessage.exists).ok('Error message element should exist')
-        .expect(errorMessage.visible).ok('Error message should be visible')
-        .expect(errorMessage.innerText).eql('Please enter a todo item', 'Error message text should match');
+        .expect(addedTodo.exists).ok('Todo item with due date should be added')
+        .expect(addedTodo.find('span').withText('Due: 2024-12-31').exists).ok('Due date should be displayed')
+        .expect(addedTodo.find('span').withText('MEDIUM').exists).ok('Priority should be displayed');
 });

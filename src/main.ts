@@ -31,7 +31,7 @@ const dueDateInput = document.getElementById('due-date-input') as HTMLInputEleme
 addButton.addEventListener('click', () => {
   const text = todoInput.value.trim();
   const priority = prioritySelect.value as 'low' | 'medium' | 'high'; // Capture the priority value
-  const dueDate = dueDateInput.value;
+  const dueDate = dueDateInput.value;  // Capture the due date
 
   if (text === '') {
     // Show error if input is empty
