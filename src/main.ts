@@ -1,6 +1,6 @@
 // 1 Import the CSS file: This ensures that the styles are applied to the HTML elements.
 import './style.css';
-//heyy
+
 // Step 2: Define the Todo interface. This interface defines the structure of a todo item.
 export interface Todo {
   id: number;
